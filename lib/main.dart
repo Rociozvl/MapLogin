@@ -7,10 +7,20 @@ import 'package:login_map/src/theme/tema.dart';
 import 'package:provider/provider.dart';
 
 
+import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 
 
  
-void main() => runApp(AppState());
+void main() {
+  final GoogleMapsFlutterPlatform mapsImplementation =
+      GoogleMapsFlutterPlatform.instance;
+  if (mapsImplementation is GoogleMapsFlutterAndroid) {
+    // Force Hybrid Composition mode.
+    mapsImplementation.useAndroidViewSurface = true;}
+
+  runApp(AppState());
+}
 
 class AppState extends StatelessWidget {
 
@@ -19,8 +29,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: ( _ ) => AuthService() ),
-       
-       
+        //ChangeNotifierProvider(create: ( _ ) => MapService() ),
       ],
       child: MyApp(),
     );
