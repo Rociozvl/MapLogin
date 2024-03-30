@@ -5,6 +5,7 @@ import 'package:login_map/services/notifcations_services.dart';
 import 'package:login_map/ui/input_decorations.dart';
 import 'package:provider/provider.dart';
 
+import '../services/maps_service.dart';
 import '../widgets/auth_background.dart';
 import '../widgets/card_container.dart';
 
@@ -136,6 +137,10 @@ class _LoginForm extends StatelessWidget {
                         // TODO: validar si el login es correcto
                        final String? errorMessage = await authService.login(loginForm.email, loginForm.password);
                        if ( errorMessage == null ) {
+                       
+                       final mapService = Provider.of<MapService>(context, listen: false);
+                       mapService.email = loginForm.email; 
+                       
                        Navigator.pushReplacementNamed(context, 'home');
                        } else {
                        // TODO: mostrar error en pantalla

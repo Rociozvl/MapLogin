@@ -6,6 +6,8 @@ import 'package:login_map/ui/input_decorations.dart';
 import 'package:login_map/widgets/auth_background.dart';
 import 'package:login_map/widgets/card_container.dart';
 import 'package:provider/provider.dart';
+
+import '../services/services.dart';
 class RegisterScreen extends StatelessWidget {
 
   @override
@@ -133,6 +135,10 @@ class _LoginForm extends StatelessWidget {
                 final String? errorMessage = await authService.createUser(loginForm.email, loginForm.password);
 
                 if ( errorMessage == null ) {
+
+                         final mapService = Provider.of<MapService>(context, listen: false);
+                         mapService.email = loginForm.email; 
+
                   Navigator.pushReplacementNamed( context, 'home');
                 } else {
                   // TODO: mostrar error en pantalla

@@ -15,22 +15,14 @@ class BottomMenuMaps extends StatelessWidget {
       destinations: [
          IconButton(
           icon: const Icon(Icons.map_outlined), 
-          onPressed: ()=> mapProv.ChangeType(), 
+          onPressed: ()=> mapProv.changeType(), 
              
         ),
 
          IconButton(
           onPressed:mapProv.goToCenter,
             icon: const Icon(Icons.album_outlined),
-          ),
-
-        IconButton(
-          onPressed:( ){
-            //TODO:  LISTADO DE MARCADORES
-          },
-            icon: const Icon(Icons.list_alt_outlined),
-          ),
-          
+          ),          
       ],
       
     ); 

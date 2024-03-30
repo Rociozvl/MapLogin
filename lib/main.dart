@@ -1,13 +1,15 @@
 
 import 'package:flutter/material.dart';
+
+
 import 'package:login_map/screens/screens.dart';
 import 'package:login_map/services/services.dart';
-
 import 'package:login_map/src/theme/tema.dart';
-import 'package:provider/provider.dart';
 
 
+import 'package:login_map/provider/provider.dart';
 import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
+
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 
 
@@ -28,8 +30,9 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: ( _ ) => AuthService() ),
-        //ChangeNotifierProvider(create: ( _ ) => MapService() ),
+        ChangeNotifierProvider(create: ( _ ) => AuthService()),
+        ChangeNotifierProvider(create: ( _ ) => MarkersProvider()),
+        ChangeNotifierProvider(create: ( _ ) => MapService()),
       ],
       child: MyApp(),
     );
