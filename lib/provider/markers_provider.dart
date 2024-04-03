@@ -6,7 +6,7 @@ import '../src/models/marker_model.dart';
 class MarkersProvider extends ChangeNotifier{
 
 List<Marker> marcas = []; 
-
+TextEditingController listMarkCtrl = TextEditingController(); 
 
 mostrarMarker (LatLng coor, String name) {
      marcas.add(
@@ -35,18 +35,13 @@ cargarLista (List<MarkerModel> lista) {
 
 //refrescar lista marcadores al agregar 
 void refrescarLista (List<MarkerModel> lista) {
-
-   final lastMark = lista.lastWhere((element) => true);
-    marcas.add(
-      Marker(
-        markerId: MarkerId(lastMark.markerId),
-        position: LatLng(lastMark.lat, lastMark.long),
-        draggable: false,
-    
-      ));
+  
+    marcas.clear(); 
+    cargarLista(lista); 
 
     notifyListeners(); 
 }
+
 
 
 }

@@ -61,7 +61,7 @@ Future<CameraPosition> determinarPosicion () async {
 Future<void> goToCenter() async {
 //TODO: CAMBIAR POR COORDENADAS GPS
 
-final GoogleMapController controller = await mapsCtrl.future;
+final GoogleMapController controller =  mapsCtrl;
 
 final position = await determinarPosicion(); 
 
@@ -79,7 +79,7 @@ Future<void> goToMarker(LatLng coordenadas) async {
     tilt: 59.440717697143555,
     zoom:16.0); 
 
-  final GoogleMapController controller = await mapsCtrl.future;
+  final GoogleMapController controller = mapsCtrl;
 
   await controller.animateCamera(CameraUpdate.newCameraPosition(moverLoc));
   

@@ -26,20 +26,13 @@ class MapsContainer extends StatelessWidget {
     final mapsProv = Provider.of<MapProvider>(context);
     final markerProv = Provider.of<MarkersProvider>(context);
     
-    /*
-    Future determinarPosicion () async {
-      await  mapsProv.determinarPosicion();  
-    }*/
-  
-  
-    return Scaffold(
+      return Scaffold(
       body: GoogleMap(
         mapType: mapsProv.selectedType,
         initialCameraPosition: mapsProv.inicioLoc,
         myLocationEnabled: true,
         myLocationButtonEnabled: false,
         onMapCreated: (GoogleMapController controller) {
-          //TODO:  TUVE QUE CAMBIAR ESTO, PUEDE HABER ERROR Y POR ESO NO SIRVE NEWCAMERA
           mapsProv.mapsCtrl = controller;
 
         },
@@ -67,3 +60,19 @@ class MapsContainer extends StatelessWidget {
 
 }
 
+/*
+ Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>();  
+    
+    }
+
+
+
+class _MarkName extends StatelessWidget {
+  const _MarkName({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}*/

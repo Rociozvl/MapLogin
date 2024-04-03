@@ -54,12 +54,13 @@ Future<String?> ultimaMarker () async{
   if(response.statusCode == 200) {
 
       var data = json.decode(response.body);
-      data.forEach((key, value){
+
+      data != null && data.isNotEmpty
+      ? data.forEach((key, value){
         final mark = MarkerModel.fromJson(value.first);  
         mark.name = key; 
-        listadoMarkers.add(mark); 
-
-      }); 
+        listadoMarkers.add(mark);})
+      : null ; 
 
       notifyListeners(); 
       return null; 
@@ -78,13 +79,16 @@ Future<String?> recuperarMarkers () async{
   if(response.statusCode == 200) {
 
       var data = json.decode(response.body);
-      data.forEach((key, value){
+     
+      data != null && data.isNotEmpty
+      ? data.forEach((key, value){
 
         final mark = MarkerModel.fromJson(value);  
         mark.name = key; 
         listadoMarkers.add(mark); 
 
-      }); 
+      })
+      : null; 
 
       notifyListeners(); 
       return null; 
@@ -95,15 +99,15 @@ Future<String?> recuperarMarkers () async{
 }
 
 //DELETE - Eliminar Coordenada  
-//TODO: CORREGIR
+//TODO: CORREGIR eliminó todo 
 
 Future<String?> eliminarMarker (MarkerModel marca) async {
 
-    var getUrl = Uri.https(baseURL, 'Coordenadas.json',  );
-    var response = await http.delete(getUrl, headers: {'name': marca.name}); 
+    var getUrl = Uri.https(baseURL, 'Coordenadas/${marca.name}.json');
+    var response = await http.delete(getUrl); 
 
     if (response.statusCode == 200) {
-           final index = listadoMarkers.indexWhere((name)=> name == marca.name);
+           final index = listadoMarkers.indexWhere((mark)=> mark.name == marca.name);
            listadoMarkers.removeAt(index);  
           
            notifyListeners(); 
