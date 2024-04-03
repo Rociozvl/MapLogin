@@ -23,8 +23,8 @@ class MarkerModel {
 
     factory MarkerModel.fromJson(Map<String, dynamic> json) => MarkerModel(
         markerId: json["markerId"],
-        lat: jsonDecode(json["lat"]).toDouble(),
-        long: jsonDecode(json["long"]).toDouble(),
+        lat: json["lat"]!.toDouble(),
+        long: json["long"]!.toDouble(),
         idUser: json["idUser"],
     );
 

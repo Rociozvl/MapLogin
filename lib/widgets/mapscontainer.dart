@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 import 'package:login_map/provider/provider.dart';
+import 'package:login_map/services/maps_service.dart';
 import 'package:login_map/widgets/widgets.dart';
 
 
@@ -25,9 +26,10 @@ class MapsContainer extends StatelessWidget {
     final mapsProv = Provider.of<MapProvider>(context);
     final markerProv = Provider.of<MarkersProvider>(context);
     
+    /*
     Future determinarPosicion () async {
       await  mapsProv.determinarPosicion();  
-    }
+    }*/
   
   
     return Scaffold(
@@ -37,16 +39,23 @@ class MapsContainer extends StatelessWidget {
         myLocationEnabled: true,
         myLocationButtonEnabled: false,
         onMapCreated: (GoogleMapController controller) {
-          mapsProv.mapsCtrl.complete(controller);
+          //TODO:  TUVE QUE CAMBIAR ESTO, PUEDE HABER ERROR Y POR ESO NO SIRVE NEWCAMERA
+          mapsProv.mapsCtrl = controller;
+
         },
-        markers:markerProv.marcas.isEmpty
-        ? Set<Marker>.of(markerProv.marcas)
-        : Set(),
+        markers: Set<Marker>.of(markerProv.marcas),   
       
-           
-        onTap: (LatLng value)  {
-          markerProv.mostrarMarker(value, 'prueba', peticionHttp); 
-          print('coordenadas tap: $value');
+        onTap: (LatLng value) async {
+
+          //TODO:  ASIGNAR NOMBRE A MI MARCA
+
+          markerProv.mostrarMarker(value, 'Marker${markerProv.marcas.length + 1}'); 
+          
+          final mapsServ = Provider.of<MapService>(context, listen: false); 
+
+          await mapsServ.agregarMarker(value.latitude.toDouble(), value.longitude.toDouble()); 
+          
+
 
         }
       ),

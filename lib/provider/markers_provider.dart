@@ -8,14 +8,11 @@ class MarkersProvider extends ChangeNotifier{
 List<Marker> marcas = []; 
 
 
-mostrarMarker (LatLng coor, String name, Function function) {
+mostrarMarker (LatLng coor, String name) {
      marcas.add(
       Marker(markerId: MarkerId(name),
       position: coor,
       draggable: false, 
-      onTap: () {
-            function();  
-      }
       ));
  notifyListeners();
 }
@@ -25,6 +22,7 @@ cargarLista (List<MarkerModel> lista) {
    for(int i = 0; i<lista.length; i++){
     marcas.add(
       Marker(
+      visible:true,
       markerId: MarkerId(lista[i].markerId.toString()), 
       position: LatLng (lista[i].lat, lista[i].long),
       draggable: false,

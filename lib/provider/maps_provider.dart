@@ -10,7 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class MapProvider extends ChangeNotifier {
 
- final Completer<GoogleMapController> mapsCtrl =  Completer<GoogleMapController>(); 
+ late GoogleMapController mapsCtrl; 
 
  double lat= -34.581534; 
  double lng= -58.420641; 
@@ -71,17 +71,18 @@ notifyListeners();
 }
 
 //Desplazarse hasta algún marcador
-Future<void> goToMarker(Marker coordenadas) async { 
+Future<void> goToMarker(LatLng coordenadas) async { 
 
   CameraPosition moverLoc =  CameraPosition(
     bearing: 192.8334901395799,
-    target: coordenadas.position,
+    target: coordenadas,
     tilt: 59.440717697143555,
     zoom:16.0); 
 
   final GoogleMapController controller = await mapsCtrl.future;
 
   await controller.animateCamera(CameraUpdate.newCameraPosition(moverLoc));
+  
   notifyListeners(); 
 }
 
