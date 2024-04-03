@@ -21,12 +21,12 @@ final String apiKey = ''; //No genero  apikey por ahora
 
 String email = ''; 
 //post - Crear Coordenada
-Future<String?> agregarMarker ( double lat, double long )async {
+Future<String?> agregarMarker ( double lat, double long, String nameMark )async {
   
     MarkerModel coordenada =  MarkerModel(
       lat: lat, 
       long: long, 
-      markerId: 'Marker${listadoMarkers.length + 1}', 
+      markerId: nameMark, 
       idUser: email); 
 
     var getUrl = Uri.https(baseURL, 'Coordenadas.json');
@@ -34,9 +34,14 @@ Future<String?> agregarMarker ( double lat, double long )async {
 
    if (response.statusCode == 200) {
       
-       await ultimaMarker();   
-       notifyListeners(); 
-       return null; 
+      // await ultimaMarker();   
+      listadoMarkers.clear(); 
+
+      await recuperarMarkers(); 
+     
+      notifyListeners(); 
+      
+      return null; 
        
    } else {
       return response.statusCode.toString(); 
@@ -45,7 +50,7 @@ Future<String?> agregarMarker ( double lat, double long )async {
 }
 
 //Recuperar ultima marca  
-//TODO:  REVISAR
+//TODO:  REVISAR PORQUE NO ANDA
 Future<String?> ultimaMarker () async{
   
     var getUrl = Uri.https(baseURL, 'Coordenadas.json', {'orderBy': '"idUser"', 'equalTo': '"$email"', 'limitToLast': '1'});

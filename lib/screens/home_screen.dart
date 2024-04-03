@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:login_map/provider/provider.dart';
@@ -46,47 +46,46 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return  Scaffold(
       appBar: AppBar(
-        leading:  markerProv.marcas.isNotEmpty
+        actions: [
+          markerProv.marcas.isNotEmpty
               ?  DropdownMenu<Marker>(
-                   leadingIcon: const Icon(Icons.edit_location_outlined),
-                   label: const Text('Mis lugares'),
-                   onSelected:(value) async  { 
-                    try{
-                          final mapProv = Provider.of<MapProvider>(context, listen: false);
-                          await mapProv.goToMarker(value!.position); 
-
-                    } catch (e) {
-                      print (e); 
-                    }
-                   
-                   },
-                    initialSelection: null,       
-                    dropdownMenuEntries: markerProv.marcas.map<DropdownMenuEntry<Marker>>((Marker value) {
-                          return DropdownMenuEntry<Marker>(
-                            value: value, 
-                            label: value.markerId.value,
-                            leadingIcon: IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () async {
-                                var markDelete = mapSer.listadoMarkers.firstWhere((marker) => marker.markerId == value.markerId.value && marker.lat == value.position.latitude); 
-                                
-                                print(markDelete.markerId + markDelete.name); 
-
-                                final String? delete = await mapSer.eliminarMarker(markDelete); 
-                                
-                                delete == null
-
-                                ? markerProv.refrescarLista(mapSer.listadoMarkers)
-                                :  ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('No se pudo eliminar el registro')),        
-                                  );
-                              },
-                              ) );
-                     }).toList(),
-                  )              
+                     leadingIcon: const Icon(Icons.edit_location_outlined),
+                     label: const Text('Mis lugares'),
+                     onSelected:(value) async  { 
+                      try{
+                            final mapProv = Provider.of<MapProvider>(context, listen: false);
+                            await mapProv.goToMarker(value!.position); 
+                
+                      } catch (e) {
+                        print (e); 
+                      }
+                     
+                     },
+                      initialSelection: null,       
+                      dropdownMenuEntries: markerProv.marcas.map<DropdownMenuEntry<Marker>>((Marker value) {
+                            return DropdownMenuEntry<Marker>(
+                              value: value, 
+                              label: value.markerId.value,
+                              leadingIcon: IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () async {
+                                  var markDelete = mapSer.listadoMarkers.firstWhere((marker) => marker.markerId == value.markerId.value && marker.lat == value.position.latitude); 
+                                  
+                                  print(markDelete.markerId + markDelete.name); 
+                
+                                  final String? delete = await mapSer.eliminarMarker(markDelete); 
+                                  
+                                  delete == null
+                
+                                  ? markerProv.refrescarLista(mapSer.listadoMarkers)
+                                  : ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('No se pudo eliminar el registro')),        
+                                    );
+                                },
+                                ) );
+                       }).toList(),)                  
               : Column(
                 children:[ 
-                  
                   IconButton(                
                   icon: const Icon(Icons.location_off, ),
                   onPressed: (){
@@ -96,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Text('Sin marcadores'),
                ],),
 
-        actions: [
+          const SizedBox(height: 40,),
           IconButton(
             icon: const Icon(Icons.output_outlined), 
             onPressed: () { 

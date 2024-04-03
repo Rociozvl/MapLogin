@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -40,17 +41,14 @@ class MapsContainer extends StatelessWidget {
       
         onTap: (LatLng value) async {
 
-          //TODO:  ASIGNAR NOMBRE A MI MARCA
+          _showMyDialog(context, markerProv, value); 
 
-          markerProv.mostrarMarker(value, 'Marker${markerProv.marcas.length + 1}'); 
+          print(markerProv.markName);
+      
           
-          final mapsServ = Provider.of<MapService>(context, listen: false); 
+          } 
 
-          await mapsServ.agregarMarker(value.latitude.toDouble(), value.longitude.toDouble()); 
-          
-
-
-        }
+       
       ),
      
       bottomNavigationBar: BottomMenuMaps(mapProv: mapsProv,),
@@ -58,21 +56,64 @@ class MapsContainer extends StatelessWidget {
     );
   }
 
+  Future<void> _showMyDialog(BuildContext context, MarkersProvider mark, LatLng position) async {
+  
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, 
+    useSafeArea: true,
+    builder: (BuildContext context) {
+      return  MarkName(mark: mark, position: position,);
+    },
+   ); 
+ }
+
+
 }
 
-/*
- Future<void> _dialogBuilder(BuildContext context) {
-    return showDialog<void>();  
-    
-    }
-
-
-
-class _MarkName extends StatelessWidget {
-  const _MarkName({super.key});
-
+class MarkName extends StatelessWidget {
+  const MarkName({super.key, required this.mark,  required this.position});
+  final MarkersProvider mark; 
+  final LatLng position;  
+ 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    
+    return AlertDialog(
+
+      content: Form(            
+              child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: mark.markCtrl,
+                decoration:const  InputDecoration(
+                  label: Text('Nombre del marcador: ')          
+                ),
+                onChanged: (value) => mark.markName = value, 
+              ),
+            ),
+        
+      actions: [
+                TextButton(onPressed: (){
+                    mark.markName = '';
+                    mark.markCtrl.clear(); 
+                    Navigator.of(context).pop();
+                },
+                child: const Text('Cancelar')),
+                 TextButton(
+                  child: const Text('Aceptar'),
+                    onPressed: ()async {
+                        final mapsServ = Provider.of<MapService>(context, listen: false);
+                        final markerProv = Provider.of<MarkersProvider>(context, listen: false);
+
+                        await mapsServ.agregarMarker(position.latitude.toDouble(), position.longitude.toDouble(), mark.markName);
+                        markerProv.refrescarLista(mapsServ.listadoMarkers);
+                                  
+                        mark.markCtrl.clear(); 
+                        Navigator.of(context).pop();
+
+                 },
+                ),
+              ],
+    );
   }
-}*/
+}
