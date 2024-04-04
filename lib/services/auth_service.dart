@@ -11,7 +11,7 @@ class AuthService extends ChangeNotifier {
   final String _firebaseToken = 'AIzaSyCbg5pvRwnQS7S8O0FYhAkbohBtBhptiT8';
 
 
-  final storage =  FlutterSecureStorage();
+  final storage =  const FlutterSecureStorage();
 
   Future<String?> createUser( String email, String password ) async {
 

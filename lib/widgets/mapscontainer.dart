@@ -1,12 +1,13 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 import 'package:login_map/provider/provider.dart';
 import 'package:login_map/services/maps_service.dart';
+
 import 'package:login_map/widgets/widgets.dart';
 
 
@@ -85,20 +86,21 @@ class MarkName extends StatelessWidget {
               child: TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: mark.markCtrl,
-                decoration:const  InputDecoration(
-                  label: Text('Nombre del marcador: ')          
+                decoration:  const InputDecoration(
+                     labelText: 'Nombre de la ubicación: '         
                 ),
-                onChanged: (value) => mark.markName = value, 
+                     onChanged: (value) => mark.markName = value, 
               ),
             ),
         
       actions: [
-                TextButton(onPressed: (){
+                TextButton(
+                  onPressed: (){
                     mark.markName = '';
                     mark.markCtrl.clear(); 
                     Navigator.of(context).pop();
                 },
-                child: const Text('Cancelar')),
+                  child: const Text('Cancelar')),
                  TextButton(
                   child: const Text('Aceptar'),
                     onPressed: ()async {

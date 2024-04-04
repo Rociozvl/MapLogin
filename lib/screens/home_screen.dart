@@ -6,6 +6,9 @@ import 'package:login_map/provider/provider.dart';
 import 'package:login_map/services/auth_service.dart';
 import 'package:login_map/services/maps_service.dart';
 
+
+
+
 import 'package:login_map/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -46,11 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return  Scaffold(
       appBar: AppBar(
+        
+       backgroundColor: const Color.fromARGB(255, 38, 3, 61),
+        toolbarHeight: 80,
+      
         actions: [
           markerProv.marcas.isNotEmpty
               ?  DropdownMenu<Marker>(
+                    width: 300,
                      leadingIcon: const Icon(Icons.edit_location_outlined),
-                     label: const Text('Mis lugares'),
+                     label: const Text('Guardados'),
                      onSelected:(value) async  { 
                       try{
                             final mapProv = Provider.of<MapProvider>(context, listen: false);
@@ -61,10 +69,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                      
                      },
-                      initialSelection: null,       
+                      initialSelection: null,    
+                        
                       dropdownMenuEntries: markerProv.marcas.map<DropdownMenuEntry<Marker>>((Marker value) {
                             return DropdownMenuEntry<Marker>(
+                             
                               value: value, 
+                              
                               label: value.markerId.value,
                               leadingIcon: IconButton(
                                 icon: const Icon(Icons.delete),
@@ -82,31 +93,45 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SnackBar(content: Text('No se pudo eliminar el registro')),        
                                     );
                                 },
-                                ) );
-                       }).toList(),)                  
-              : Column(
-                children:[ 
-                  IconButton(                
-                  icon: const Icon(Icons.location_off, ),
-                  onPressed: (){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Toca el mapa para agregar tu primer marcador')),        
-                  );  }),
-                  const Text('Sin marcadores'),
-               ],),
+                                )
+                                );
+                              }).toList(),
+                       )                  
+              : 
+             
+           
+                    Column(
+                      
+                      children:[
+                        IconButton( 
+                                     
+                      icon: const Icon(Icons.add, ),
+                      onPressed: (){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Toca el mapa para agregar tu primer marcador')),        
+                      ); 
+                      }),
+                        const Text('Agregar ubicaciones'),
+                        const SizedBox(width: 250,)
+                      ] 
+                      
+                    ),
+                    
+                 
+                 
+            
 
-          const SizedBox(height: 40,),
+          const SizedBox(width: 20,),
           IconButton(
             icon: const Icon(Icons.output_outlined), 
             onPressed: () { 
 
-             
               mapSer.listadoMarkers.clear();  
               markerProv.marcas.clear(); 
 
               final authService = Provider.of<AuthService>(context, listen: false);
               authService.logout();
-
+               
               Navigator.pushReplacementNamed(context, 'login');
           },),
        ],

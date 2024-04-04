@@ -10,8 +10,9 @@ class BottomMenuMaps extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NavigationBar(
+    height: 55,
     indicatorColor: const Color.fromRGBO(67, 1, 95, 0.8),
-    backgroundColor: const Color.fromRGBO(17, 1, 23, 1),
+    backgroundColor: const Color.fromARGB(255, 38, 3, 61),
       destinations: [
          IconButton(
           icon: const Icon(Icons.map_outlined), 

@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-     initialRoute: 'login',
+     initialRoute: 'home',
      routes: {
           'login'   : ( _) => LoginScreen(),
           'home'    : ( _)=> const HomeScreen(),
@@ -52,7 +52,8 @@ class MyApp extends StatelessWidget {
        
      },
      scaffoldMessengerKey: NotificationsService.messengerKey  ,
-       theme: miTema,       );
+       theme: miTema,     
+         );
    
   }
 }
