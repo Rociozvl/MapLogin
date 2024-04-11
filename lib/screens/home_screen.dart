@@ -88,7 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   final String? delete = await mapSer.eliminarMarker(markDelete); 
                                   
                                   delete == null
-                
                                   ? markerProv.refrescarLista(mapSer.listadoMarkers)
                                   : ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('No se pudo eliminar el registro')),        

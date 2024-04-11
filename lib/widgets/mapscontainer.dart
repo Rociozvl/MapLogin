@@ -16,12 +16,7 @@ import 'package:login_map/widgets/widgets.dart';
 class MapsContainer extends StatelessWidget {
   const MapsContainer({super.key});
 
-  Future<void> peticionHttp () async{
-    print('ejecutó función'); 
-
-    //TODO: peticion http
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
 
@@ -39,19 +34,29 @@ class MapsContainer extends StatelessWidget {
 
         },
         markers: Set<Marker>.of(markerProv.marcas),   
-      
-        onTap: (LatLng value) async {
+        onLongPress: (LatLng value) async {
+
+          _showMyDialog(context, markerProv, value); 
+
+          print(markerProv.markName);
+          
+          } ,
+       /* onTap: (LatLng value) async {
+        //TODO: VER INFO DE CLIENTE
 
           _showMyDialog(context, markerProv, value); 
 
           print(markerProv.markName);
       
           
-          } 
+          } */
 
        
       ),
-     
+      floatingActionButton: ChangeNotifierProvider(
+        create: (_) => SearchingPlaceProvider() ,
+        child: FloatbuttonMaps()),
+      floatingActionButtonLocation:FloatingActionButtonLocation.startFloat ,
       bottomNavigationBar: BottomMenuMaps(mapProv: mapsProv,),
      
     );
@@ -68,7 +73,6 @@ class MapsContainer extends StatelessWidget {
     },
    ); 
  }
-
 
 }
 
