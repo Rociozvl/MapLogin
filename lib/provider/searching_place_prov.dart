@@ -14,4 +14,8 @@ class SearchingPlaceProvider extends ChangeNotifier {
     notifyListeners(); 
   }
 
+
+
+
+
 }

@@ -1,12 +1,11 @@
 
 import 'package:flutter/material.dart';
 
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 
 import 'package:login_map/provider/provider.dart';
 import 'package:login_map/services/maps_service.dart';
+import 'package:login_map/services/place_services.dart';
 
 import 'package:login_map/widgets/widgets.dart';
 
@@ -22,7 +21,9 @@ class MapsContainer extends StatelessWidget {
 
     final mapsProv = Provider.of<MapProvider>(context);
     final markerProv = Provider.of<MarkersProvider>(context);
-    
+    final placeSer = Provider.of<PlaceService>(context);
+
+   
       return Scaffold(
       body: GoogleMap(
         mapType: mapsProv.selectedType,
@@ -31,32 +32,30 @@ class MapsContainer extends StatelessWidget {
         myLocationButtonEnabled: false,
         onMapCreated: (GoogleMapController controller) {
           mapsProv.mapsCtrl = controller;
-
         },
-        markers: Set<Marker>.of(markerProv.marcas),   
+        markers: markerProv.destinos.isEmpty
+        ? Set<Marker>.of(markerProv.marcas)
+        : Set<Marker>.of(markerProv.marcas)..addAll(markerProv.destinos),
+        polylines: Set.of(placeSer.polylines.values),
         onLongPress: (LatLng value) async {
-
           _showMyDialog(context, markerProv, value); 
-
-          print(markerProv.markName);
-          
           } ,
-       /* onTap: (LatLng value) async {
-        //TODO: VER INFO DE CLIENTE
-
-          _showMyDialog(context, markerProv, value); 
-
-          print(markerProv.markName);
-      
-          
-          } */
+        onTap: (LatLng value) {
+          markerProv.marcaDestino(value); 
+          placeSer.generarRuta(placeSer.obtenerPolilineas(mapsProv.inicioLoc.target, markerProv.destinos[0].position));
+       
+       } 
 
        
       ),
-      floatingActionButton: ChangeNotifierProvider(
-        create: (_) => SearchingPlaceProvider() ,
-        child: FloatbuttonMaps()),
-      floatingActionButtonLocation:FloatingActionButtonLocation.startFloat ,
+      floatingActionButton: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: ( _ ) => SearchingPlaceProvider()),
+          ChangeNotifierProvider(create: ( _ ) => PlaceService()),
+        ],
+      child: const FloatbuttonMaps()),
+
+      floatingActionButtonLocation:FloatingActionButtonLocation.startTop ,
       bottomNavigationBar: BottomMenuMaps(mapProv: mapsProv,),
      
     );

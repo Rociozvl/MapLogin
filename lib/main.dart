@@ -33,7 +33,8 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: ( _ ) => AuthService()),
         ChangeNotifierProvider(create: ( _ ) => MarkersProvider()),
         ChangeNotifierProvider(create: ( _ ) => MapService()),
-         ChangeNotifierProvider(create: ( _ ) => MapProvider()),
+        ChangeNotifierProvider(create: ( _ ) => MapProvider()),
+        ChangeNotifierProvider(create: ( _ ) => PlaceService()),
       ],
       child: MyApp(),
     );
