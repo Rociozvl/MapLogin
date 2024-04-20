@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,6 +11,8 @@ import 'package:login_map/services/maps_service.dart';
 
 
 import 'package:login_map/widgets/widgets.dart';
+
+import '../services/services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     @override
     Widget build(BuildContext context) {
     final markerProv = Provider.of<MarkersProvider>(context);
-     final mapSer = Provider.of<MapService>(context);
+   final mapSer = Provider.of<MapService>(context);
 
     return  Scaffold(
       appBar: AppBar(
@@ -74,11 +77,26 @@ class _HomeScreenState extends State<HomeScreen> {
                         
                       dropdownMenuEntries: markerProv.marcas.map<DropdownMenuEntry<Marker>>((Marker value) {
                             return DropdownMenuEntry<Marker>(
-                             
+                              style: ButtonStyle(
+                                backgroundColor:MaterialStateProperty.all<Color>(const Color.fromARGB(255, 38, 3, 61)),
+                              ),
                               value: value, 
-                              
-                              label: value.markerId.value,
-                              leadingIcon: IconButton(
+                              label:  value.markerId.value,
+                              trailingIcon:Row(
+                                children: [
+                                                                IconButton(
+                                      onPressed: () async {
+                                        
+                                      final placeSer = Provider.of<PlaceService>(context, listen: false);
+                                       final mapProv = Provider.of<MapProvider>(context, listen: false); 
+                                       
+                                       markerProv.marcaDestino(value.position); 
+                                       placeSer.generarRuta(placeSer.obtenerPolilineas(mapProv.inicioLoc.target, markerProv.destinos[0].position)); 
+
+                                      },
+                                        icon: const Icon(CupertinoIcons.arrow_turn_down_left),
+                                      ),
+                                      IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () async {
                                   var markDelete = mapSer.listadoMarkers.firstWhere((marker) => marker.markerId == value.markerId.value && marker.lat == value.position.latitude); 
@@ -88,15 +106,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   final String? delete = await mapSer.eliminarMarker(markDelete); 
                                   
                                   delete == null
-                
                                   ? markerProv.refrescarLista(mapSer.listadoMarkers)
                                   : ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('No se pudo eliminar el registro')),        
                                     );
                                 },
-                                )
-                                );
-                              }).toList(),
+                                ),
+                                ],
+                              ),
+                              
+                             );
+                           }).toList(),
                        )                  
               : 
              

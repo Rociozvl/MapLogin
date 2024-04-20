@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:login_map/provider/provider.dart';
+import 'package:login_map/services/place_services.dart';
 
 class BottomMenuMaps extends StatelessWidget {
   const BottomMenuMaps({super.key,  required this.mapProv});
@@ -9,6 +10,9 @@ class BottomMenuMaps extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  
+  
+
     return NavigationBar(
     height: 55,
     indicatorColor: const Color.fromRGBO(67, 1, 95, 0.8),
@@ -19,7 +23,19 @@ class BottomMenuMaps extends StatelessWidget {
           onPressed: ()=> mapProv.changeType(), 
              
         ),
-
+         IconButton(
+                    onPressed: () {
+                     final placeSer = Provider.of<PlaceService>(context, listen: false);
+                     final markerProv = Provider.of<MarkersProvider>(context, listen: false); 
+                    
+                     if( markerProv.destinos.isNotEmpty){
+                        placeSer.limpiarPolylines();
+                        markerProv.limpiarDestino();
+                      }
+                    },
+                      icon: const Icon(Icons.delete),
+                    ),
+          
          IconButton(
           onPressed:mapProv.goToCenter,
             icon: const Icon(Icons.album_outlined),
