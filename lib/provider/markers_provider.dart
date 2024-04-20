@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 
 import '../src/models/marker_model.dart';
 
@@ -8,13 +10,19 @@ class MarkersProvider extends ChangeNotifier{
 List<Marker> marcas = []; 
 TextEditingController markCtrl = TextEditingController(); 
 String markName = ''; 
+List<Marker> destinos = []; 
+
 
 mostrarMarker (LatLng coor, String name) {
      marcas.add(
       Marker(markerId: MarkerId(name),
       position: coor,
       draggable: false, 
+      onTap: () {
+          marcaDestino(coor);
+      }
       ));
+
  notifyListeners();
 }
 //pasar de listador model a markerMap 
@@ -43,7 +51,25 @@ void refrescarLista (List<MarkerModel> lista) {
     notifyListeners(); 
 }
 
+void marcaDestino (LatLng coor) {
+ limpiarDestino();
+  destinos.add(
+        Marker(markerId: const MarkerId('Destino'),
+        position: coor,
+        draggable: false, 
+        ));
 
-
+  notifyListeners();
 
 }
+void limpiarDestino(){
+destinos = [];
+ notifyListeners();
+
+} 
+
+
+
+} 
+
+

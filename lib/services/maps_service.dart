@@ -78,7 +78,7 @@ Future<String?> ultimaMarker () async{
 //get - Recuperar Coordenada
 Future<String?> recuperarMarkers () async{
 
-    var getUrl = Uri.https(baseURL, 'Coordenadas.json', {'idUser':'"$email"'});
+    var getUrl = Uri.https(baseURL, 'Coordenadas.json', {'idUser':'"$this.email"'});
     var response = await http.get(getUrl);  
 
   if(response.statusCode == 200) {
@@ -89,8 +89,10 @@ Future<String?> recuperarMarkers () async{
       ? data.forEach((key, value){
 
         final mark = MarkerModel.fromJson(value);  
-        mark.name = key; 
-        listadoMarkers.add(mark); 
+        if (mark.idUser == email)  {
+             mark.name = key; 
+            listadoMarkers.add(mark); 
+        }
 
       })
       : null; 
