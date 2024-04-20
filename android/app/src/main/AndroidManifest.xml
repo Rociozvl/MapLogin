@@ -1,8 +1,35 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.baseflow.permissionhandler.example">
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    
+    <!--  Permisos de geolocator & permission ahandler-->
+    <uses-permission 
+         android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission 
+        android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission 
+        android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    
+    
+    
     <application
         android:label="login_map"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        >
+
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBF9fxfB0quecp_1kEMMT1ZLb6Ge8o7aUE"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -41,4 +68,7 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+
+   
+    
 </manifest>

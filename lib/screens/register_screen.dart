@@ -6,6 +6,8 @@ import 'package:login_map/ui/input_decorations.dart';
 import 'package:login_map/widgets/auth_background.dart';
 import 'package:login_map/widgets/card_container.dart';
 import 'package:provider/provider.dart';
+
+import '../services/services.dart';
 class RegisterScreen extends StatelessWidget {
 
   @override
@@ -37,13 +39,13 @@ class RegisterScreen extends StatelessWidget {
               ),
 
               const SizedBox( height: 50 ),
-              TextButton(
+              ElevatedButton(
                 onPressed: () => Navigator.pushReplacementNamed(context, 'login'), 
                 style: ButtonStyle(
                   overlayColor: MaterialStateProperty.all( const Color.fromARGB(255, 230, 231, 233).withOpacity(0.1)),
-                  shape: MaterialStateProperty.all( StadiumBorder() )
+                  shape: MaterialStateProperty.all( const StadiumBorder() )
                 ),
-                child: const Text('Already have an account?', style: TextStyle( fontSize: 18, color: Color.fromARGB(221, 236, 234, 234) ),)
+                child: const Text('¿Ya tienes una cuenta?',)
               ),
               const SizedBox( height: 50 ),
             ],
@@ -133,6 +135,10 @@ class _LoginForm extends StatelessWidget {
                 final String? errorMessage = await authService.createUser(loginForm.email, loginForm.password);
 
                 if ( errorMessage == null ) {
+
+                         final mapService = Provider.of<MapService>(context, listen: false);
+                         mapService.email = loginForm.email; 
+
                   Navigator.pushReplacementNamed( context, 'home');
                 } else {
                   // TODO: mostrar error en pantalla

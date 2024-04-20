@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+
 
 import 'package:http/http.dart' as http;
 
@@ -9,9 +12,9 @@ class AuthService extends ChangeNotifier {
 
   final String _baseUrl = 'identitytoolkit.googleapis.com';
   final String _firebaseToken = 'AIzaSyCbg5pvRwnQS7S8O0FYhAkbohBtBhptiT8';
+  
 
-
-  final storage =  FlutterSecureStorage();
+  final storage =  const FlutterSecureStorage();
 
   Future<String?> createUser( String email, String password ) async {
 

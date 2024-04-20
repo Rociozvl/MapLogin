@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "898545781047",
+    "firebase_url": "https://notifications-484d0-default-rtdb.firebaseio.com",
+    "project_id": "notifications-484d0",
+    "storage_bucket": "notifications-484d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898545781047:android:fa75f6610a641cb7f8b2b2",
+        "android_client_info": {
+          "package_name": "com.rocioceleste.notifications"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898545781047-681qt5o355lkqv7v566k7s034jmif0fn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rocioceleste.notifications",
+            "certificate_hash": "b16831ede4141a37da08596b48cc0732598ddca6"
+          }
+        },
+        {
+          "client_id": "898545781047-42dqu9adkiub9ueokk8nvhthv2paik3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbg5pvRwnQS7S8O0FYhAkbohBtBhptiT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898545781047-42dqu9adkiub9ueokk8nvhthv2paik3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
