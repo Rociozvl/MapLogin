@@ -46,8 +46,8 @@ class LoginScreen extends StatelessWidget {
                 )
               ),
 
-              const SizedBox( height: 50 ),
-              TextButton(
+              const SizedBox( height: 20 ),
+              ElevatedButton(
 
                 onPressed: () => Navigator.pushReplacementNamed(context, 'register'), 
 
@@ -55,11 +55,12 @@ class LoginScreen extends StatelessWidget {
                   overlayColor: MaterialStateProperty.all( const Color.fromARGB(255, 235, 235, 238).withOpacity(0.1)),
                   shape: MaterialStateProperty.all( const StadiumBorder() )
                 ),
-                child: const Text('don´t have an account?', style: TextStyle( fontSize: 18, color: Color.fromARGB(221, 245, 240, 240) ),)
+                child: const Text('¿No tienes una cuenta?',)
               ),
-              const SizedBox( height: 20 ),
+              //const SizedBox( height: 10 ),
 
               ElevatedButton(
+              
                onPressed: () async {
                 UserCredential? userCredential = await signInWithGoogle();
                   if (userCredential != null) {

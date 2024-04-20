@@ -33,8 +33,10 @@ dependencies:
   firebase_core: ^2.30.0
   flutter:
     sdk: flutter
+  
   flutter_secure_storage: ^9.0.0
   geolocator: ^11.0.0
+  
   google_maps_flutter: ^2.6.1
   google_maps_flutter_android: ^2.7.0
   google_sign_in: ^6.2.1
