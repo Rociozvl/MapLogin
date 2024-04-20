@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_map/provider/login_form_provider.dart';
+import 'package:login_map/services/auth_google.dart';
 import 'package:login_map/services/auth_service.dart';
 import 'package:login_map/services/notifcations_services.dart';
 import 'package:login_map/ui/input_decorations.dart';
@@ -55,7 +57,18 @@ class LoginScreen extends StatelessWidget {
                 ),
                 child: const Text('don´t have an account?', style: TextStyle( fontSize: 18, color: Color.fromARGB(221, 245, 240, 240) ),)
               ),
-              const SizedBox( height: 50 ),
+              const SizedBox( height: 20 ),
+
+              ElevatedButton(
+               onPressed: () async {
+                UserCredential? userCredential = await signInWithGoogle();
+                  if (userCredential != null) {
+                  print("Usuario autenticado con Google: ${userCredential.user!.displayName}");
+    }              Navigator.pushReplacementNamed(context, 'home');
+  },
+                  child: const Text("Iniciar sesión con Google"),
+                  ),
+                 
             ],
           ),
         )
