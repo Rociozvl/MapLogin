@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,9 +28,9 @@ class SearchInputWidget extends StatelessWidget {
                   ),
                 );
    }
-
   }
-  /*
+
+/*
 class SearchInputWidget extends StatelessWidget {
   const SearchInputWidget({super.key});
 
@@ -102,4 +100,3 @@ class SearchInputWidget extends StatelessWidget {
                     },
                   ),
                 );*/
-  
