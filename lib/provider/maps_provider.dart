@@ -31,18 +31,19 @@ class MapProvider extends ChangeNotifier {
 }
 
 Future<CameraPosition> determinarPosicion () async {
+  
 
-  if (await Permission.location.request().isGranted) {
-    await Geolocator.requestPermission(); 
-  } 
-
+   if (await Permission.location.request().isGranted) {
+     await Geolocator.requestPermission(); 
+   } 
+  
   bool serviceEnabled;
   LocationPermission permission;
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
   permission = await Geolocator.checkPermission();
 
   if (serviceEnabled ) { 
-      if (permission == LocationPermission.always || permission ==LocationPermission.whileInUse){
+       if (permission == LocationPermission.always || permission ==LocationPermission.whileInUse){
           var position = await Geolocator.getCurrentPosition();
           print(position.latitude.toString()); 
           
@@ -50,9 +51,10 @@ Future<CameraPosition> determinarPosicion () async {
                   target: LatLng(position.latitude, position.longitude),
                   zoom: 16.0,
                 ); 
-      } else {
-          print('Sin permisos');
-      }
+     } else {
+           print('Sin permisos');
+       }
+
 }
   
  return inicioLoc; 
