@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,7 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     recuperarMarkers();
+    
     //determinarPosicion(); 
+   
   }
 
     //Desde correo  traer de marker services listado
@@ -84,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onPressed: () async {
                                   var markDelete = mapSer.listadoMarkers.firstWhere((marker) => marker.markerId == value.markerId.value && marker.lat == value.position.latitude); 
                                   
-                                  print(markDelete.markerId + markDelete.name); 
+                                  print(markDelete.markerId! + markDelete.name); 
                 
                                   final String? delete = await mapSer.eliminarMarker(markDelete); 
                                   
@@ -129,9 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
               _mostrarDialogo(context);
                mapSer.listadoMarkers.clear();  
                markerProv.marcas.clear();
-               final authService = Provider.of<AuthService>(context, listen: false);
-               authService.logout();
+              
             
+               
               //  Navigator.pushReplacementNamed(context, 'login');
           },),
        ],
@@ -166,10 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 //Navigator.of(context).pop();
                 Navigator.pushReplacementNamed(context, 'login');
                  // Pop de nuevo para salir de la página
-              
-                      signOutGoogle();
-                    
-                  
+                 final authService = Provider.of<AuthService>(context, listen: false);
+                 authService.logout();
+                  final authGoogle = Provider.of<AuthGoogleProvider>( context , listen: false);
+                      authGoogle.signOutGoogle();
 
               },
               child: const Text('Sí'),
@@ -184,6 +187,8 @@ class _HomeScreenState extends State<HomeScreen> {
           
       
 }
+
+
 
 
 

@@ -1,8 +1,11 @@
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:login_map/firebase_options.dart';
 
 
 import 'package:login_map/screens/screens.dart';
+import 'package:login_map/services/auth_google.dart';
 import 'package:login_map/services/services.dart';
 import 'package:login_map/src/theme/tema.dart';
 
@@ -14,12 +17,14 @@ import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platf
 
 
  
-void main() {
+void main() async {
   final GoogleMapsFlutterPlatform mapsImplementation =
       GoogleMapsFlutterPlatform.instance;
   if (mapsImplementation is GoogleMapsFlutterAndroid) {
     // Force Hybrid Composition mode.
     mapsImplementation.useAndroidViewSurface = true;}
+     WidgetsFlutterBinding.ensureInitialized();
+     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(AppState());
 }
@@ -31,6 +36,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: ( _ ) => AuthService()),
+        ChangeNotifierProvider(create: ( _ ) => AuthGoogleProvider()),
         ChangeNotifierProvider(create: ( _ ) => MarkersProvider()),
         ChangeNotifierProvider(create: ( _ ) => MapService()),
          ChangeNotifierProvider(create: ( _ ) => MapProvider()),

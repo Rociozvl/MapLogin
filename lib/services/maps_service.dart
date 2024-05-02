@@ -6,8 +6,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:login_map/provider/maps_provider.dart';
+import 'package:login_map/services/auth_service.dart';
 
 import 'package:login_map/src/models/marker_model.dart';
 
@@ -20,6 +23,9 @@ final String baseURL ='mapsloginextrado-default-rtdb.firebaseio.com';
 final String apiKey = ''; //No genero  apikey por ahora
 
 String email = ''; 
+
+
+final storage =  const FlutterSecureStorage();
 //post - Crear Coordenada
 Future<String?> agregarMarker ( double lat, double long, String nameMark )async {
   
@@ -29,11 +35,15 @@ Future<String?> agregarMarker ( double lat, double long, String nameMark )async 
       markerId: nameMark, 
       idUser: email); 
 
-    var getUrl = Uri.https(baseURL, 'Coordenadas.json');
-    var response = await http.post(getUrl, body: jsonEncode(coordenada));  
+        var getUrl = Uri.https(baseURL, 'Coordenadas.json',{
+          'auth' : await storage.read(key: 'token') ?? ''
+        });
+
+        var response = await http.post(getUrl,body: jsonEncode(coordenada),);
 
    if (response.statusCode == 200) {
-      
+      print('marcador guardado con exito');
+       print('Respuesta del servidor: ${response.body}');
       // await ultimaMarker();   
       listadoMarkers.clear(); 
 
@@ -44,6 +54,7 @@ Future<String?> agregarMarker ( double lat, double long, String nameMark )async 
       return null; 
        
    } else {
+    print('Error al guardar el marcador: ${response.body}');
       return response.statusCode.toString(); 
    }
   
@@ -52,9 +63,10 @@ Future<String?> agregarMarker ( double lat, double long, String nameMark )async 
 //Recuperar ultima marca  
 //TODO:  REVISAR PORQUE NO ANDA
 Future<String?> ultimaMarker () async{
-  
-    var getUrl = Uri.https(baseURL, 'Coordenadas.json', {'orderBy': '"idUser"', 'equalTo': '"$email"', 'limitToLast': '1'});
-    var response = await http.get(getUrl);  
+      
+      var getUrl = Uri.https(baseURL, 'Coordenadas.json', {'orderBy': '"idUser"',  'auth': await storage.read(key: 'token') ?? '',
+     'limitToLast': '1'});
+      var response = await http.get(getUrl);  
 
   if(response.statusCode == 200) {
 
@@ -78,10 +90,12 @@ Future<String?> ultimaMarker () async{
 //get - Recuperar Coordenada
 Future<String?> recuperarMarkers () async{
 
-    var getUrl = Uri.https(baseURL, 'Coordenadas.json', {'idUser':'"$this.email"'});
-    var response = await http.get(getUrl);  
+    var getUrl = Uri.https(baseURL, 'Coordenadas.json',
+     { 'auth': await storage.read(key: 'token') ?? ''});
+   
+      var response = await http.get(getUrl);
 
-  if(response.statusCode == 200) {
+     if(response.statusCode == 200) {
 
       var data = json.decode(response.body);
      
@@ -110,7 +124,9 @@ Future<String?> recuperarMarkers () async{
 
 Future<String?> eliminarMarker (MarkerModel marca) async {
 
-    var getUrl = Uri.https(baseURL, 'Coordenadas/${marca.name}.json');
+    var getUrl = Uri.https(baseURL, 'Coordenadas/${marca.name}.json',{
+      'auth': await storage.read(key: 'token') ?? ''
+    });
     var response = await http.delete(getUrl); 
 
     if (response.statusCode == 200) {

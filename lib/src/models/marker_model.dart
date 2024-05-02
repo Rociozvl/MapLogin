@@ -4,17 +4,17 @@ class MarkerModel {
 
  double lat;
  double long;
- String markerId; //markedID
+ String? markerId; //markedID
  // para rescatar solo listado del user  
- String idUser;
+ String? idUser;
  late String name;  
 
 
  MarkerModel({
   required this.lat,
   required this.long, 
-  required this.markerId,
-  required this.idUser
+  this.markerId,
+  this.idUser, 
  });
 
  factory MarkerModel.fromRawJson(String str) => MarkerModel.fromJson(json.decode(str));

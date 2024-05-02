@@ -60,15 +60,18 @@ class LoginScreen extends StatelessWidget {
               //const SizedBox( height: 10 ),
 
               ElevatedButton(
-              
-               onPressed: () async {
-                UserCredential? userCredential = await signInWithGoogle();
-                  if (userCredential != null) {
-                  print("Usuario autenticado con Google: ${userCredential.user!.displayName}");
-    }              Navigator.pushReplacementNamed(context, 'home');
+  onPressed: () async {
+    final authProvider = Provider.of<AuthGoogleProvider>(context, listen: false);
+    if (authProvider != null) {
+      UserCredential? userCredential = await authProvider.signInWithGoogle();
+      if (userCredential != null) {
+        print("Usuario autenticado con Google: ${userCredential.user!.displayName}");
+        Navigator.pushReplacementNamed(context, 'home');
+      }
+    }
   },
-                  child: const Text("Iniciar sesión con Google"),
-                  ),
+  child: const Text("Iniciar sesión con Google"),
+),
                  
             ],
           ),

@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "898545781047-681qt5o355lkqv7v566k7s034jmif0fn.apps.googleusercontent.com",
+          "client_id": "898545781047-du96s7l6dscq0dtom06oa1949a4jf4s6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.rocioceleste.notifications",
-            "certificate_hash": "b16831ede4141a37da08596b48cc0732598ddca6"
+            "certificate_hash": "d8f8622c77f6d40dee4fdda499f6e93be511902d"
           }
         },
         {
