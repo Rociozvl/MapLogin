@@ -42,13 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
         marker == null 
         ? await markerProv.cargarLista(mapService.listadoMarkers)
-        : print (marker);
+        : print(marker);
     }
     
     @override
     Widget build(BuildContext context) {
     final markerProv = Provider.of<MarkersProvider>(context);
-   final mapSer = Provider.of<MapService>(context);
+    final mapSer = Provider.of<MapService>(context);
 
     return  Scaffold(
       appBar: AppBar(
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             await mapProv.goToMarker(value!.position); 
                 
                       } catch (e) {
-                        print (e); 
+                        print(e); 
                       }
                      
                      },

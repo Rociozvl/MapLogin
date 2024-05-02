@@ -27,6 +27,8 @@ class FloatbuttonMaps extends StatelessWidget {
                 searchProv.estadoInput
                 ? searchProv.estadoInput = false
                 :searchProv.estadoInput = true; 
+
+                searchProv.textController.clear();
           
               },
               icon: const Icon(Icons.search_outlined, color: Color.fromARGB(255, 226, 214, 233),

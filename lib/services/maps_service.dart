@@ -17,9 +17,10 @@ class MapService extends ChangeNotifier{
 
 List<MarkerModel> listadoMarkers =[]; 
 final String baseURL ='mapsloginextrado-default-rtdb.firebaseio.com'; 
-final String apiKey = ''; //No genero  apikey por ahora
+//final String apiKey = ''; No genero  apikey por ahora
 
 String email = ''; 
+
 //post - Crear Coordenada
 Future<String?> agregarMarker ( double lat, double long, String nameMark )async {
   

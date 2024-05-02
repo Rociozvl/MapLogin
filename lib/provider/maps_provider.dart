@@ -74,9 +74,8 @@ notifyListeners();
 Future<void> goToMarker(LatLng coordenadas) async { 
 
   CameraPosition moverLoc =  CameraPosition(
-    bearing: 192.8334901395799,
+    //bearing: 192.8334901395799,
     target: coordenadas,
-    tilt: 59.440717697143555,
     zoom:16.0); 
 
   final GoogleMapController controller = mapsCtrl;
