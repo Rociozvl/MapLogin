@@ -77,12 +77,11 @@ Future<void> goToMarker(LatLng coordenadas) async {
     //bearing: 192.8334901395799,
     target: coordenadas,
     zoom:16.0); 
-
   final GoogleMapController controller = mapsCtrl;
-
   await controller.animateCamera(CameraUpdate.newCameraPosition(moverLoc));
   
   notifyListeners(); 
+
 }
 
 }

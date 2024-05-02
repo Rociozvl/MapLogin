@@ -41,19 +41,12 @@ class SearchAutoGoogle extends StatelessWidget {
               child: GooglePlacesAutoCompleteTextFormField(
                 textEditingController: searchProv.textController,
                 googleAPIKey: searchProv.apiKey,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your address',
-                  labelText: 'Address',
-                  labelStyle: TextStyle(color: Color.fromARGB(226, 250, 237, 253)),
-                  border: OutlineInputBorder(),
-                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter some text';
                   }
                   return null;
                 },
-                // proxyURL: _yourProxyURL,
                 maxLines: 1,
                 overlayContainer: (child) => Material(                  
                   color: const Color.fromARGB(190, 38, 3, 61,),
@@ -61,26 +54,23 @@ class SearchAutoGoogle extends StatelessWidget {
                   child: child,
                 ),
                 getPlaceDetailWithLatLng: (prediction){ 
-                    searchProv.coordenadas = LatLng(double.parse(prediction.lat!), double.parse(prediction.lng!));
+                  searchProv.coordenadas = LatLng(double.parse(prediction.lat!), double.parse(prediction.lng!));
+                  final mapsProv = Provider.of<MapProvider>(context, listen:false);
+                  mapsProv.goToMarker(searchProv.coordenadas!);
 
+                  searchProv.textController.clear();
+                  searchProv.coordenadas = null;                      
+                   
                 },                
-                itmClick: (prediction) async {  
-                   searchProv.textController.text = prediction.description!;
+                itmClick: (prediction)  {  
 
-                    final mapsProv = Provider.of<MapProvider>(context, listen:false);  
-                    final placeSer = Provider.of<PlaceService>(context, listen: false);        
-                    final markerProv = Provider.of<MarkersProvider>(context, listen:false);              
-                  
-                    
-                    markerProv.marcaDestino(searchProv.coordenadas!); 
-                    placeSer.generarRuta(placeSer.obtenerPolilineas(mapsProv.inicioLoc.target, markerProv.destinos[0].position));
-                    
-                    await mapsProv.goToMarker(searchProv.coordenadas!);
-                    
-                    searchProv.textController.clear();
-                    
+                      searchProv.textController.text = prediction.description!;
+                      searchProv.textController.clear();
+
                     },
-                    onTap: () => searchProv.textController.clear(),
+                    onTap: () { searchProv.textController.clear();
+                      searchProv.coordenadas = null; 
+                    },
               ),
             ); 
            
