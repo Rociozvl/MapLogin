@@ -57,6 +57,10 @@ void marcaDestino (LatLng coor) {
         Marker(markerId: const MarkerId('Destino'),
         position: coor,
         draggable: false, 
+        onTap: () {
+            
+
+        }
         ));
 
   notifyListeners();

@@ -1,11 +1,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:flutter_google_maps_webservices/places.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_autocomplete_text_field/google_places_autocomplete_text_field.dart';
-import 'package:google_places_autocomplete_text_field/model/prediction.dart';
-
 import 'package:login_map/provider/provider.dart';
 import 'package:login_map/services/place_services.dart';
 
@@ -53,19 +50,29 @@ class SearchAutoGoogle extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   child: child,
                 ),
-                getPlaceDetailWithLatLng: (prediction){ 
+                getPlaceDetailWithLatLng: (prediction) async { 
                   searchProv.coordenadas = LatLng(double.parse(prediction.lat!), double.parse(prediction.lng!));
                   final mapsProv = Provider.of<MapProvider>(context, listen:false);
-                  mapsProv.goToMarker(searchProv.coordenadas!);
+                  await mapsProv.goToMarker(searchProv.coordenadas!);
 
+                  final markProv = Provider.of<MarkersProvider>(context, listen: false); 
+                  markProv.marcaDestino(searchProv.coordenadas!); 
+
+                  final placeSer = Provider.of<PlaceService>(context, listen: false);
+                  await placeSer.generarRuta(placeSer.obtenerPolilineas(mapsProv.inicioLoc.target , searchProv.coordenadas!)); 
+                    
                   searchProv.textController.clear();
                   searchProv.coordenadas = null;                      
                    
                 },                
-                itmClick: (prediction)  {  
+                itmClick: (prediction) async {  
 
                       searchProv.textController.text = prediction.description!;
                       searchProv.textController.clear();
+                    
+                   
+
+                    
 
                     },
                     onTap: () { searchProv.textController.clear();

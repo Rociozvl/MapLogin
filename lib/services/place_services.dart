@@ -40,7 +40,7 @@ if(result.points.isNotEmpty){
 
 
 
-void generarRuta (Future<List<LatLng>> coordenadas) async {
+Future<void> generarRuta (Future<List<LatLng>> coordenadas) async {
  polylines ={}; 
  PolylineId id = const PolylineId('polilinea'); 
  Polyline polyline = Polyline(polylineId: id, color: const Color.fromARGB(126, 69, 3, 95), points:await coordenadas,
@@ -48,6 +48,7 @@ void generarRuta (Future<List<LatLng>> coordenadas) async {
 
  polylines[id] = polyline; 
  notifyListeners();
+ 
 }
 
 void limpiarPolylines () {
@@ -57,67 +58,3 @@ void limpiarPolylines () {
 
 
 }
-
-
-
-
-
-/*
-class PlaceService extends ChangeNotifier{
-
-
-static String apiKey = 'AIzaSyBF9fxfB0quecp_1kEMMT1ZLb6Ge8o7aUE';
-static String urlGoogleMaps = 'maps.googleapis.com';
-static String endpointPlaces = '/maps/api/place/details/json';
-static String endpointAutocomplete= '/maps/api/place/autocomplete/json';
-static String endpointDirection= '/maps/api/directions/json';
-
-
-List<PredictionPlace> listadoPredicciones =[]; 
-
-Future<void> buscarLugar (String lugar, double lat, double long) async {
-  
-  Map<String,  dynamic> input ={
-    'input' : lugar,
-    'includedPrimaryTypes' : '(cities|geocode)',
-    'languageCode': 'es',
-    'key': apiKey,
-    
-  };
-
-  final getUrl = Uri.https(urlGoogleMaps,endpointAutocomplete, input); 
-  final response = await http.get(getUrl);
-
-  print('recuperando data ...'); 
-
-  print(response.statusCode); 
-  print(response.body); 
-
-  if(response.statusCode == 200) {
-    
-    var data=json.decode(response.body)['predictions'];
-
-   try {
-         data.forEach((value){
-
-          final lugar = PredictionPlace.fromJson(value); 
-          print(lugar.description);
-          listadoPredicciones.add(lugar);
-
-          notifyListeners();
-          });
-
-   } catch (e) {
-      print(e.toString() + response.statusCode.toString()); 
-   }
-  }
-
- }
-
-//limpiar data 
-void terminaBusqueda () {
-  listadoPredicciones = []; 
-}
-
-
-}*/
