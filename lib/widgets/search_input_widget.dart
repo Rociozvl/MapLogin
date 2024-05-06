@@ -1,5 +1,4 @@
-
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_autocomplete_text_field/google_places_autocomplete_text_field.dart';
@@ -7,6 +6,8 @@ import 'package:login_map/provider/provider.dart';
 import 'package:login_map/services/place_services.dart';
 
 
+
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 
 class SearchInputWidget extends StatelessWidget {

@@ -13,7 +13,7 @@ import 'package:login_map/widgets/widgets.dart';
 
 
 class MapsContainer extends StatelessWidget {
-  const MapsContainer({super.key});
+  const MapsContainer({key});
 
  
   @override
@@ -76,7 +76,7 @@ class MapsContainer extends StatelessWidget {
 }
 
 class MarkName extends StatelessWidget {
-  const MarkName({super.key, required this.mark,  required this.position});
+  const MarkName({key, required this.mark,  required this.position});
   final MarkersProvider mark; 
   final LatLng position;  
  

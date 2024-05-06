@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:login_map/provider/provider.dart';
+import 'package:login_map/services/auth_google.dart';
 import 'package:login_map/services/auth_service.dart';
 import 'package:login_map/services/maps_service.dart';
 
@@ -15,7 +17,7 @@ import 'package:login_map/widgets/widgets.dart';
 import '../services/services.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -27,7 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     recuperarMarkers();
-    determinarPosicion(); 
+    
+    //determinarPosicion(); 
+   
   }
 
     //Desde correo  traer de marker services listado
@@ -101,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onPressed: () async {
                                   var markDelete = mapSer.listadoMarkers.firstWhere((marker) => marker.markerId == value.markerId.value && marker.lat == value.position.latitude); 
                                   
-                                  print(markDelete.markerId + markDelete.name); 
+                                  print(markDelete.markerId! + markDelete.name); 
                 
                                   final String? delete = await mapSer.eliminarMarker(markDelete); 
                                   
@@ -146,14 +150,13 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.output_outlined), 
             onPressed: () { 
-
-              mapSer.listadoMarkers.clear();  
-              markerProv.marcas.clear(); 
-
-              final authService = Provider.of<AuthService>(context, listen: false);
-              authService.logout();
+              _mostrarDialogo(context);
+               mapSer.listadoMarkers.clear();  
+               markerProv.marcas.clear();
+              
+            
                
-              Navigator.pushReplacementNamed(context, 'login');
+              //  Navigator.pushReplacementNamed(context, 'login');
           },),
        ],
       ),
@@ -168,13 +171,45 @@ class _HomeScreenState extends State<HomeScreen> {
     );
    }
 
-   Future determinarPosicion () async {
+  
+    
+  void _mostrarDialogo(BuildContext context) {
+        showDialog(context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                   title: const Text('¿Desea salir de la página?'),
+                   actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                //Navigator.of(context).pop();
+                Navigator.pushReplacementNamed(context, 'login');
+                 // Pop de nuevo para salir de la página
+                 final authService = Provider.of<AuthService>(context, listen: false);
+                 authService.logout();
+                  final authGoogle = Provider.of<AuthGoogleProvider>( context , listen: false);
+                      authGoogle.signOutGoogle();
+
+              },
+              child: const Text('Sí'),
+            ),
+          ],
+        );
+            
+            }
+
+          );
+      }
+          
       
-      final mapsProv = Provider.of<MapProvider>(context, listen: false);
-      await  mapsProv.determinarPosicion();  
-
-    }
-
-
 }
+
+
+
+
 

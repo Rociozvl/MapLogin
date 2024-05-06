@@ -4,7 +4,7 @@ import 'package:login_map/provider/provider.dart';
 import 'package:login_map/services/place_services.dart';
 
 class BottomMenuMaps extends StatelessWidget {
-  const BottomMenuMaps({super.key,  required this.mapProv});
+  const  BottomMenuMaps({key,  required this.mapProv});
   
   final MapProvider mapProv; 
 
@@ -37,7 +37,13 @@ class BottomMenuMaps extends StatelessWidget {
                     ),
           
          IconButton(
-          onPressed:mapProv.goToCenter,
+          
+          onPressed:(){
+          //final mapsProv = Provider.of<MapProvider>(context, listen: false);
+          //mapProv.determinarPosicion();
+          mapProv.goToCenter();
+          
+          },
             icon: const Icon(Icons.album_outlined),
           ),          
       ],

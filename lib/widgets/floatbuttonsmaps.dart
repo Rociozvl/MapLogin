@@ -6,7 +6,7 @@ import 'package:login_map/widgets/widgets.dart';
 
 
 class FloatbuttonMaps extends StatelessWidget {
-  const FloatbuttonMaps({super.key});
+  const FloatbuttonMaps({key});
 
   @override
   Widget build(BuildContext context) {
