@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_autocomplete_text_field/google_places_autocomplete_text_field.dart';
 import 'package:login_map/provider/provider.dart';
-import 'package:login_map/services/place_services.dart';
 
-
-
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 
 class SearchInputWidget extends StatelessWidget {
@@ -56,12 +52,10 @@ class SearchAutoGoogle extends StatelessWidget {
                   final mapsProv = Provider.of<MapProvider>(context, listen:false);
                   await mapsProv.goToMarker(searchProv.coordenadas!);
 
-                  final markProv = Provider.of<MarkersProvider>(context, listen: false); 
-                  markProv.marcaDestino(searchProv.coordenadas!); 
+                  //para generar la marca, no se puede habilitar hasta que no se solvente marcar la ruta 
+                  //final markProv = Provider.of<MarkersProvider>(context, listen: false); 
+                  //markProv.marcaDestino(searchProv.coordenadas!); 
 
-                  final placeSer = Provider.of<PlaceService>(context, listen: false);
-                  await placeSer.generarRuta(placeSer.obtenerPolilineas(mapsProv.inicioLoc.target , searchProv.coordenadas!)); 
-                    
                   searchProv.textController.clear();
                   searchProv.coordenadas = null;                      
                    
@@ -71,10 +65,6 @@ class SearchAutoGoogle extends StatelessWidget {
                       searchProv.textController.text = prediction.description!;
                       searchProv.textController.clear();
                     
-                   
-
-                    
-
                     },
                     onTap: () { searchProv.textController.clear();
                       searchProv.coordenadas = null; 
