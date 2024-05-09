@@ -114,7 +114,7 @@ class MarkName extends StatelessWidget {
                         markerProv.refrescarLista(mapsServ.listadoMarkers);
                                   
                         mark.markCtrl.clear(); 
-                        Navigator.of(context).pop();
+                       Navigator.of(context).pop();
 
                  },
                 ),

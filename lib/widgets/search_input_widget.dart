@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_autocomplete_text_field/google_places_autocomplete_text_field.dart';
@@ -7,7 +6,6 @@ import 'package:login_map/services/place_services.dart';
 
 
 
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 
 class SearchInputWidget extends StatelessWidget {
@@ -19,7 +17,8 @@ class SearchInputWidget extends StatelessWidget {
 
   
   return Container( 
-                  width: 150,
+                padding: const EdgeInsets.only( bottom: 8),
+                  width: 260,
                   height: 50,
                   child:SearchAutoGoogle(searchProv: searchProv,),
                   );
@@ -70,10 +69,6 @@ class SearchAutoGoogle extends StatelessWidget {
 
                       searchProv.textController.text = prediction.description!;
                       searchProv.textController.clear();
-                    
-                   
-
-                    
 
                     },
                     onTap: () { searchProv.textController.clear();

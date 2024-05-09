@@ -33,7 +33,7 @@ class BottomMenuMaps extends StatelessWidget {
                         markerProv.limpiarDestino();
                       }
                     },
-                      icon: const Icon(Icons.delete),
+                      icon: const Icon(Icons.explore_off_sharp),
                     ),
           
          IconButton(

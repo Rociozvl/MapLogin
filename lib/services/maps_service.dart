@@ -9,8 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:login_map/provider/maps_provider.dart';
-import 'package:login_map/services/auth_service.dart';
+
 
 import 'package:login_map/src/models/marker_model.dart';
 

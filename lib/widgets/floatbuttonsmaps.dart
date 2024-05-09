@@ -12,39 +12,47 @@ class FloatbuttonMaps extends StatelessWidget {
   Widget build(BuildContext context) {
     final searchProv = Provider.of<SearchingPlaceProvider>(context); 
 
-    return   ClipRRect(
-      borderRadius: BorderRadius.circular(50), 
-      child: Container(
-        width: 300,
-        color:searchProv.estadoInput
-        ? Color.fromARGB(190, 38, 3, 61,)
-        : null,
-        child: Row(      
-          children:[
-            IconButton(
-              onPressed: () {
-                //Al tocar con un hero se expanda y abra un input para poder buscar         
-                searchProv.estadoInput
-                ? searchProv.estadoInput = false
-                :searchProv.estadoInput = true; 
-
-                searchProv.textController.clear();
+    return   Container(
+      padding: const EdgeInsets.only(top: 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(50), 
+        child: Container(
           
-              },
-              icon: const Icon(Icons.search_outlined, color: Color.fromARGB(255, 226, 214, 233),
+          //padding: EdgeInsets.only(top: 10),
+          height: 50,
+          width: 350,
+          color:searchProv.estadoInput
+          ? const Color.fromARGB(190, 38, 3, 61,)
+          : null,
+          child: Row(      
+            children:[
+              IconButton(
+                
+                onPressed: () {
+                  //Al tocar con un hero se expanda y abra un input para poder buscar         
+                  searchProv.estadoInput
+                  ? searchProv.estadoInput = false
+                  :searchProv.estadoInput = true; 
+      
+                  searchProv.textController.clear();
+            
+                },
+               
+                icon: const Icon(Icons.search_outlined, color: Color.fromARGB(255, 226, 214, 233),
+                ),
+                iconSize: 30,
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(190, 38, 3, 61,)),
+                ),
               ),
-              iconSize: 30,
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(190, 38, 3, 61,)),
-              ),
-            ),
-            SizedBox(width: 20,),
-
-            searchProv.estadoInput
-              ? SearchInputWidget()
-              : Container( width: 1, height: 1,),
-             
-            ] 
+              const SizedBox(width: 10,),
+      
+              searchProv.estadoInput
+                ? const SearchInputWidget()
+                : Container( width: 1, height: 1,),
+               
+              ] 
+          ),
         ),
       ),
     );

@@ -4,15 +4,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
-//TODO:  USO DE API DIRECTION , API AUTOCOMPLETE (?) Y FLUTTER POLYLINE POINTS
-
-
 
 class PlaceService extends ChangeNotifier{
 static String apiKey = 'AIzaSyBF9fxfB0quecp_1kEMMT1ZLb6Ge8o7aUE';
-
-//TODO: funcion para buscar direcciones en maps 
-
 
 
 //Funciones para polilineas
@@ -43,8 +37,8 @@ if(result.points.isNotEmpty){
 Future<void> generarRuta (Future<List<LatLng>> coordenadas) async {
  polylines ={}; 
  PolylineId id = const PolylineId('polilinea'); 
- Polyline polyline = Polyline(polylineId: id, color: const Color.fromARGB(126, 69, 3, 95), points:await coordenadas,
- width: 6);
+ Polyline polyline = Polyline(polylineId: id, color: const Color.fromARGB(220, 12, 64, 124), points:await coordenadas,
+ width: 4);
 
  polylines[id] = polyline; 
  notifyListeners();

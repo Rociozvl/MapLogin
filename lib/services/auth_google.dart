@@ -27,9 +27,9 @@ import 'package:google_sign_in/google_sign_in.dart';
           final userCredential = await _auth.signInWithCredential(credential);
           print('uid');
           print(userCredential.user?.uid);
-        if (userCredential != null && userCredential.user != null) {
+        if (googleSignInAuthentication.idToken != null) {
         // Guardar el ID token en el almacenamiento seguro
-        await storage.write(key: 'token', value: userCredential.user?.uid);
+        await storage.write(key: 'token', value: googleSignInAuthentication.idToken) ;
          }
 
       return userCredential;
