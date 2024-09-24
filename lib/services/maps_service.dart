@@ -16,7 +16,7 @@ class MapService extends ChangeNotifier{
 
 
 List<MarkerModel> listadoMarkers =[]; 
-final String baseURL ='mapsloginextrado-default-rtdb.firebaseio.com'; 
+final String baseURL =''; 
 final String apiKey = ''; //No genero  apikey por ahora
 
 String email = ''; 
